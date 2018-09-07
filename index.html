@@ -1,0 +1,113 @@
+<html>
+
+<head>
+    <script>
+        testAnonym('HTML file, before app.js');
+    </script>
+    <script src="before.js"></script>
+    <script src="app.js"></script>
+    <script src="after.js"></script>
+    <script>
+        testAnonym('HTML file, after app.js');
+
+        //Object
+        var person = {
+            "first_name": "Stanko",
+            "last_name": "Stanic",
+            "age": 27
+        };
+        console.log('Object person: ', person)
+
+        //Array of objects
+        var people = [
+            {
+                "first_name": "Stanko",
+                "last_name": "Stanic",
+                "age": 27
+            },
+            {
+                "first_name": "Marko",
+                "last_name": "Markovic",
+                "age": 25
+            },
+            {
+                "first_name": "Petra",
+                "last_name": "Petrovic",
+                "age": 29
+            }
+        ];
+        console.log('Array of objects: ', people)
+
+        //create class "Person"
+        function Person(firstName, lastName, gender) {
+            this.firstName = firstName;
+            this.lastName = lastName;
+            this.gender = gender;
+
+            this.fullName = function (obj) {
+                return obj.constructor.name + ' fullname: ' + this.firstName + ' ' + this.lastName;
+            }
+        }
+
+        Person.prototype.isStudent = function () {
+            alert('No, I am not a student!');
+        }
+
+        //create class "Student" which is extended by Person
+        function Student() {
+            Person.call(this);
+        }
+        Student.prototype = Object.create(Person.prototype);
+        Student.prototype.constructor = Student;
+
+        Student.prototype.isStudent = function () {
+            alert('Yes, I am a student!');
+        }
+
+        //Instance object of Person class
+        const stanko = new Person('Stanko', 'Stanic', 'male');
+        stanko.isStudent();
+        console.log(stanko);
+        console.log(stanko.fullName(stanko));
+
+        //Instance object of Student class
+        var student = new Student();
+        student.isStudent();
+        student.firstName = 'Marko';
+        student.lastName = 'Jankovic';
+        student.gender = 'male';
+        console.log(student);
+        console.log(student.fullName(student));
+
+        //stanko is instance of Person class (supperclass)
+        alert(stanko instanceof Student);
+        alert(stanko instanceof Person);
+
+
+        //Promise
+        function isGreaterThen5(number) {
+            return new Promise(function (resolve, reject) {
+                if (number > 5) {
+                    resolve('Bravo! You have entered greater number!');
+                } else {
+                    reject(new Error('Sorry, you did not enter greater number!'));
+                }
+            })
+        }
+
+        isGreaterThen5(7).then(function (res) {
+            console.log(res);
+        }).catch(function (error) {
+            console.log(error);
+        });
+
+
+
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>

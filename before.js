@@ -1,0 +1,1 @@
+testAnonym('Other JS file, imported before app.js');
